@@ -1,5 +1,6 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 
 // importer la BD
@@ -24,7 +25,7 @@ class itg_admin {
         if ($_POST){
             $this->username = $this->prepare_data($_POST["username"]);
             $this->password = $this->prepare_data($_POST["pass"]);
-            //$this->remember = $this->prepare_data($_POST["remember"]);
+            $this->remember = $this->prepare_data($_POST["remember"]);
         }
         }
         public function _login_action() {
@@ -32,7 +33,7 @@ class itg_admin {
             if(!isset($this->username) || $this->username == '' || !isset($this->password) || $this->password == '') {
                 //données insuffisantes, retour vers login
                 
-                header ("location: ../views/contact.html");
+                header ("location: ../views/pass.html");
             }
            
             //hasher mot de passe en SHA1 puis en MD5
@@ -43,16 +44,18 @@ class itg_admin {
                 //ready to login
                 
                 $_SESSION[ 'admin_login' ] = $this->username;
-                /*if (isset($this->remember)){
+                if (isset($this->remember)){
                     //si "Se souvenir de moi" est activée, créer cookie
                     //effectuer un cookie valable 1 jour, cad 1*24*60*60 secondes
+                   
                     setcookie('username', $this->username, time() + 1*24*60*60);
                     setcookie('password', $this->password, time() + 1*24*60*60);
+                    
                 } else {
                     // détruire les cookies prédéfinies
                     setcookie('username', '', time() - 1*24*60*60);
                     setcookie('password', '', time() - 1*24*60*60);
-                }*/
+                }
                 
                 header("location: ../views/index.html");
             } else {
@@ -92,11 +95,11 @@ class itg_admin {
                 if($this->_check_db($_COOKIE['username'], $_COOKIE['password'])) {
                     //l'utilisateur est dans la base,procéder vers page acceuil
                     $_SESSION['admin_login'] = $_COOKIE['username'];
-                    header("location: index.php");
+                    header("location: add_project.php");
                     die();
                 }
                 else {
-                    //Si le contenu de la coukie n'existe pas dans la base, retour vers page login
+                    //Si le contenu de la cookie n'existe pas dans la base, retour vers page login
                     header("location: login.php");
                     die();
                 }
@@ -108,4 +111,7 @@ class itg_admin {
             }
     
     }
+}
+}
+?>
     
