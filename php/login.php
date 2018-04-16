@@ -37,13 +37,12 @@ class itg_admin {
            
             //hasher mot de passe en SHA1 puis en MD5
             $this->password = md5(sha1($this->password));
-            echo $this->_check_db($this->username, $this->password);
-            die();
+            
             // vérifier si la cobinaison existe dans la base
             if($this->_check_db($this->username, $this->password)){
                 //ready to login
                 
-               // $_SESSION[ 'admin_login' ] = $this->username;
+                $_SESSION[ 'admin_login' ] = $this->username;
                 /*if (isset($this->remember)){
                     //si "Se souvenir de moi" est activée, créer cookie
                     //effectuer un cookie valable 1 jour, cad 1*24*60*60 secondes
@@ -62,28 +61,51 @@ class itg_admin {
             die();
         }
          private function _check_db($username, $password){
-        global $db;
-        //obtient les données de la base
-        $stmt = $db->prepare("SELECT * FROM admins WHERE username=:username");
-        $stmt->bindParam(':username', $username);
-        $stmt->execute();
-        $user_row=$stmt->fetch();
-        echo $user_row;
-        die();
-        // compare les données entrées ave ceux de la base
-        if( md5($user_row['password']) == $password  &&  isset($user_row) ){
-            
-            return true;
+            global $db;
+            //obtient les données de la base
+            $stmt = $db->prepare("SELECT * FROM admins WHERE username=:username");
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            $user_row=$stmt->fetch();
+            //echo $user_row;
+            //die();
+            // compare les données entrées ave ceux de la base
+            if( md5($user_row['password']) == $password  &&  isset($user_row) ){
+                
+                return true;
+            }
+            else
+                return false;
         }
-        else
-            return false;
-    }
     private function prepare_data ($data){
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
     }
+    public function _authenticate(){
+        //verifier si la session est ouverrte déjà
+        if (!isset($_SESSION['admin_login'])){
+        //session non ouverte, verifier s'il y a une COOKIE
+            if(isset($_COOKIE['username']) && isset($_COOKIE['password'])){
+                //cookie trouvéé, son contenu existe il dans la base?
+                if($this->_check_db($_COOKIE['username'], $_COOKIE['password'])) {
+                    //l'utilisateur est dans la base,procéder vers page acceuil
+                    $_SESSION['admin_login'] = $_COOKIE['username'];
+                    header("location: index.php");
+                    die();
+                }
+                else {
+                    //Si le contenu de la coukie n'existe pas dans la base, retour vers page login
+                    header("location: login.php");
+                    die();
+                }
+            }
+            else {
+                // Cookie non trouvée, retour vers page de login
+                header("location: login.php");
+                die();
+            }
     
     }
     

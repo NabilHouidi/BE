@@ -1,6 +1,9 @@
 
 
 <?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    
 /**
 * The db.php file which initiates a connection to the database
 * and gives a global $db variable for access
@@ -29,11 +32,3 @@ catch(PDOException $e)
     {
     echo "Connection failed: " . $e->getMessage();
     }
-
-    $username = "nabil";
-    //$stmt = $db->prepare("SELECT * FROM admins WHERE username=:username");
-    $stmt = $db->prepare("SELECT * FROM ADMINS");
-    //$stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $user_row=$stmt->fetch();
-    echo $user_row;
