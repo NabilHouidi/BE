@@ -29,7 +29,7 @@
 <div class="roww">
 <div class="coll">
 <h3>send me message</h3>
-        <form name="contact_form" onsubmit="return validateForm()" method="post" action="/insert" >
+        <form name="contact_form" onsubmit="return validateForm()" method="post" action="../php/message_handler.php" >
             <input name="u_name" type="text" class="form-control" placeholder="Your name here"><br>
 
             <input name="email" class="form-control" placeholder="Email"><br>
