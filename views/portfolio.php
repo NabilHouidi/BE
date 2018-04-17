@@ -1,35 +1,7 @@
 <?php
-  if(!isset($_SESSION)){
-    session_start();
-  } 
-  include_once '../php/db.php ';
-
-?>
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>cv</title>
-    <link rel="stylesheet" href="../stylesheets/style.css">
-    <link rel="stylesheet" href="../stylesheets/bootstrap.min.css" type="text/css">
-
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <script src="../stylesheets/bootstrap.min.js"></script>
-</head>
-
-
-<body>
-
-    <nav class="navbar navbar-dark bg-dark">
-        <span class="navbar-brand mb-0 h1">welcome</span>
-        <div style="float: right; margin-right: 3%;" style="border: 2px solid black;">
-            <form action="../php/nav.php" method="post" id="onglet">
-
-                <button type="submit" name="button" class="btn btn-outline-info" value="login">login</button>
-            </form>
-        </div>
-    </nav>
+     include './template.php';
+     include_once '../php/db.php';
+     ?>
 
     <form action="../php/nav.php" method="post" id="onglet">
 
@@ -40,14 +12,14 @@
         <button type="submit" name="button" class="btn btn-outline-info" value="hoobies">hoobies</button>
         <?php
             if(isset($_SESSION['admin_login'])){
-                echo '<button type="submit" name="button" class="btn btn-outline-info" value="add_art">ADD_ART</button>';
+                echo '<button type="submit" name="button" class="btn btn-outline-info" value="add_art">Add a Project </button>';
             } 
         ?>
 
     </form>
     
-    <div id="title-container" class="" >
-        <h1 >My Projects</h1>
+    <div id="title-container" style="width:100%"  >
+        <h3 style="align:center; " >My Projects</h3>
     </div>
 
     <div class="coll">
@@ -67,6 +39,7 @@
                             <div class="portfolio-child-div" >
                                 <p> ' . $row["Content"] . '</p> 
                             </div>
+                            
                         </div> ';
                 }
 
