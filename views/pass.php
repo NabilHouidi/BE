@@ -26,6 +26,9 @@
             <label for="pass">votre password</label>
             <input type="password" class="form-control" value="pass" id="pass" name="pass">
         </div>
+        
+        <input type="checkbox" class="" value="remember" id="remember" name="remember"> Remember Me <br>
+
         <button type="submit" class="btn btn-outline-info">login</button>
     </form>
 </div>
