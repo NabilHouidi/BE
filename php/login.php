@@ -22,7 +22,7 @@ class itg_admin {
         session_start();
         
         self::$abs_path = dirname(dirname(__FILE__)); 
-        if ($_POST){
+        if (isset($_POST)){
             $this->username = $this->prepare_data($_POST["username"]);
             $this->password = $this->prepare_data($_POST["pass"]);
             $this->remember = $this->prepare_data($_POST["remember"]);
@@ -57,7 +57,7 @@ class itg_admin {
                     setcookie('password', '', time() - 1*24*60*60);
                 }
                 
-                header("location: ../views/index.html");
+                header("location: ../views/index.php");
             } else {
                 header("location : ../views/pass.html");
             }
